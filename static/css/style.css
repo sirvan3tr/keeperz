@@ -1,0 +1,15 @@
+body {
+	font-family: 'Titillium Web', sans-serif;
+}
+@font-face {
+    font-family: FTRAMD;
+    src: url('../fonts/FTRAMD_.TTF');
+}
+.dbparent {
+	padding: 5px 20px 5px 10px;
+	background-color: #d31145;
+	margin-bottom: 2px;
+	color: #fff;
+	width: 200px;
+	border-radius: 4px 0 0 4px;
+}

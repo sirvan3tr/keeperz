@@ -4,6 +4,7 @@
 	<title><?php echo $ptitle; ?></title>
 	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
@@ -68,9 +69,10 @@ if(isset($_SESSION['id'])){
 	// Fetch the person from the database
 	$person = ORM::for_table('user')->find_one($_SESSION['id']);
 }
+/*
 echo $person->id;
 
 foreach(ORM::for_table('user')->find_result_set() as $record) {
     echo $record->name;
-}
+}*/
 ?>
