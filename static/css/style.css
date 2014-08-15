@@ -13,3 +13,13 @@ body {
 	width: 200px;
 	border-radius: 4px 0 0 4px;
 }
+.dbcontainer ul {
+	padding-left: 25px;
+}
+/*
+	background: url(../img/Shine/PNG/24x24/21_24x24.png) 0px 1px no-repeat;
+	padding: 0 0 0 32px;
+*/
+.dbcontainer ul li {
+	list-style: none;
+}

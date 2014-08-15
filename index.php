@@ -29,28 +29,41 @@
     </div>
   </div>
 </div>
-<?php
-	$dbarr=array();
-	$db = ORM::for_table('client')->find_many();
-	foreach ($db as $dbs) {
-	    echo '<div class="dbparent" >'.$dbs->name.'</div>';
-		array_push($dbarr, $dbs->id);
-	}
-	print_r($dbarr);
-	
-	foreach ($dbarr as $dbarrs) {
-	    echo '<div class="dbcontainer" dbid="'.$dbarrs.'">';
-	    $folders = ORM::for_table('folder')->where('client_id', $dbarrs)->find_many();
-		foreach ($folders as $folder) {
-	    	echo '<div class="folderitem" folderid="'.$folder->id.'">'.$folder->name.'</div>';
-	    	$items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
-	    	foreach ($items as $item) {
-	    		echo '<div class="anitem" folderid="'.$item->id.'">'.$item->name.'</div>';
-			}
-		}
-	    echo '</div>';
-	}
-?>
+<table>
+	<tr>
+		<td>
+			<?php
+				$dbarr=array();
+				$db = ORM::for_table('client')->find_many();
+				foreach ($db as $dbs) {
+				    echo '<div class="dbparent" >'.$dbs->name.'</div>';
+					array_push($dbarr, $dbs->id);
+				}
+			?>
+		</td>
+		<td>
+			<?php
+				//print_r($dbarr);
+				foreach ($dbarr as $dbarrs) {
+				    echo '<div class="dbcontainer" dbid="'.$dbarrs.'">';
+				    $folders = ORM::for_table('folder')->where('client_id', $dbarrs)->find_many();
+				    echo '<ul>';
+					foreach ($folders as $folder) {
+				    	echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.'</li>';
+				    	$items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
+				    	echo '<ul>';
+				    	foreach ($items as $item) {
+				    		echo '<li class="anitem" folderid="'.$item->id.'">'.$item->name.'</li>';
+						}
+						echo '</ul>';
+					}
+					echo '</ul>';
+				    echo '</div>';
+				}
+			?>
+		</td>
+	</tr>
+</table>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
