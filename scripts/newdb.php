@@ -9,7 +9,7 @@
 
 	$newdb->name = $title;
 	$newdb->weight = 0;
-	$newdb->pub_date = date(DATE_RFC2822);
+	//$newdb->pub_date = date(DATE_RFC2822);
   $newdb->user_id = $userid;
 	$newdb->icon_id = 1;
 

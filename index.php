@@ -41,7 +41,7 @@
 				}
 			?>
 		</td>
-		<td>
+		<td width="200">
 			<?php
 				//print_r($dbarr);
 				foreach ($dbarr as $dbarrs) {
@@ -61,6 +61,53 @@
 				    echo '</div>';
 				}
 			?>
+		</td>
+		<td width="500">
+			<p class="bg-warning">This password seems to be out of date, consider changing it.</p>
+			<form class="form-horizontal" role="form">
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+			    <div class="col-sm-10">
+			      <input type="email" class="form-control" id="inputEmail3" placeholder="Email" value="tech login details for rbx">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+			    <div class="col-sm-10">
+			      <input type="email" class="form-control" id="inputEmail3" placeholder="Email" value="tech@rockaboxmedia.com">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+			    <div class="col-sm-10">
+			      <input type="password" class="form-control" id="inputPassword3" placeholder="Password" value="helloworld">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputPassword3" class="col-sm-2 control-label">Password repeat</label>
+			    <div class="col-sm-10">
+			      <input type="password" class="form-control" id="inputPassword3" placeholder="Password" value="helloworld">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">URL</label>
+			    <div class="col-sm-10">
+			      <input type="email" class="form-control" id="inputEmail3" placeholder="Email" value="tech@rockaboxmedia.com">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">URL</label>
+			    <div class="col-sm-10">
+			      <textarea class="form-control" rows="3">Rockabox is a platform. A platform. massive platforms
+			      </textarea>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-default">Update</button>
+			    </div>
+			  </div>
+			</form>
 		</td>
 	</tr>
 </table>

@@ -12,6 +12,7 @@ body {
 	color: #fff;
 	width: 200px;
 	border-radius: 4px 0 0 4px;
+	cursor: pointer;
 }
 .dbcontainer ul {
 	padding-left: 25px;
@@ -22,4 +23,7 @@ body {
 */
 .dbcontainer ul li {
 	list-style: none;
+}
+td {
+	vertical-align: top;
 }

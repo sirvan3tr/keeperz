@@ -15,7 +15,7 @@ session_start();
 
 $host = 'localhost';
 $user = 'root';
-$pass = 'sirvanmysqlpassword';
+$pass = '';
 $database = 'keeperz';
 
 ORM::configure("mysql:host=$host;dbname=$database");
@@ -31,5 +31,3 @@ $redirect_url = 'http://localhost/keeperz/login.php'; // The url of your web sit
 $client_id = '660638127035-21hgr05m6v9orcs4diafgkrqtu7k509t.apps.googleusercontent.com';
 $client_secret = 'fC599duexFcT4P4RVia1Di_A';
 $api_key = 'AIzaSyAU4TdhxhmgxAg3OX3kHtpG6z5JAwRyrRY';
-
-
