@@ -15,7 +15,8 @@ session_start();
 
 $host = 'localhost';
 $user = 'root';
-$pass = '';
+// $pass = ''; //home
+$pass = 'sirvanmysqlpassword'; //work
 $database = 'keeperz';
 
 ORM::configure("mysql:host=$host;dbname=$database");

@@ -7,12 +7,20 @@ body {
 }
 .dbparent {
 	padding: 5px 20px 5px 10px;
-	background-color: #d31145;
+	background-color: #ccc;
 	margin-bottom: 2px;
 	color: #fff;
 	width: 200px;
-	border-radius: 4px 0 0 4px;
+	//border-radius: 4px 0 0 4px;
 	cursor: pointer;
+}
+.dbparent-selected {
+	background-color: #333;
+	//border-radius: 4px 20px 20px 4px;
+	//width: 200px;
+}
+.dbcontainer {
+	display: none;
 }
 .dbcontainer ul {
 	padding-left: 25px;
@@ -23,7 +31,34 @@ body {
 */
 .dbcontainer ul li {
 	list-style: none;
+	border-bottom: 1px dashed #fff;
+	padding: 4px 0;
 }
 td {
 	vertical-align: top;
+}
+.anitem {
+	cursor: pointer;
+}
+.anitem:hover {
+	color: #d31145;
+}
+.anitem span {
+	float: right;
+	margin-right: 20px;
+}
+div#itemform-con {
+	padding: 20px;
+	min-width: 500px;
+	/*
+	margin: 0 20px 20px 20px;
+	-webkit-box-shadow: 5px 5px 18px 0px rgba(50, 50, 50, 0.25);
+	-moz-box-shadow:    5px 5px 18px 0px rgba(50, 50, 50, 0.25);
+	box-shadow:         5px 5px 18px 0px rgba(50, 50, 50, 0.25);
+	*/
+	background-color: #ECECEC;
+}
+.folder-col {
+	background-color: #333;
+	color: #fff;
 }
