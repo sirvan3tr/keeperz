@@ -4,7 +4,7 @@
 	<title><?php echo $ptitle; ?></title>
 	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="static/css/style.css">
-  <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
@@ -30,7 +30,7 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div class="container-fluid">
+<div class="container">
 <?php
 require './setup.php';
 

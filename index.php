@@ -3,44 +3,41 @@
     include("includes/header.php");
     include("includes/modals.php");
 ?>
-<table width="100%">
-    <tr>
-        <td width="200">
-            <?php
-                $dbarr=array();
-                $db = ORM::for_table('client')->find_many();
-                foreach ($db as $dbs) {
-                    echo '<div class="dbparent" dbid="'.$dbs->id.'">'.$dbs->name.'</div>';
-                    array_push($dbarr, $dbs->id);
+<h1>KEEPERZ</h1>
+<div class="dbparent-tabs">
+    <?php
+        $dbarr=array();
+        $db = ORM::for_table('client')->find_many();
+        foreach ($db as $dbs) {
+            echo '<div class="fl dbparent" dbid="'.$dbs->id.'">'.$dbs->name.'</div>';
+            array_push($dbarr, $dbs->id);
+        }
+    ?>
+    <div class="clear"></div>
+</div>
+<div class="folders-container fl">
+    <?php
+        //print_r($dbarr);
+        foreach ($dbarr as $dbarrs) {
+            echo '<div id="clientid-'.$dbarrs.'" class="dbcontainer" dbid="'.$dbarrs.'">';
+            $folders = ORM::for_table('folder')->where('client_id', $dbarrs)->find_many();
+            echo '<ul>';
+            foreach ($folders as $folder) {
+                echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.' <span class="glyphicon glyphicon-plus-sign pull-right"></span></li>';
+                $items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
+                echo '<ul>';
+                foreach ($items as $item) {
+                    echo '<li class="anitem" itemid="'.$item->id.'">'.$item->name.'<span class="glyphicon glyphicon-chevron-right"></span></li>';
                 }
-            ?>
-        </td>
-        <td width="300" class="folder-col">
-            <?php
-                //print_r($dbarr);
-                foreach ($dbarr as $dbarrs) {
-                    echo '<div id="clientid-'.$dbarrs.'" class="dbcontainer" dbid="'.$dbarrs.'">';
-                    $folders = ORM::for_table('folder')->where('client_id', $dbarrs)->find_many();
-                    echo '<ul>';
-                    foreach ($folders as $folder) {
-                        echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.' <span class="glyphicon glyphicon-plus-sign pull-right"></span></li>';
-                        $items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
-                        echo '<ul>';
-                        foreach ($items as $item) {
-                            echo '<li class="anitem" itemid="'.$item->id.'">'.$item->name.'<span class="glyphicon glyphicon-chevron-right"></span></li>';
-                        }
-                        echo '</ul>';
-                    }
-                    echo '</ul>';
-                    echo '</div>';
-                }
-            ?>
-        </td>
-        <td>
-            <?php include('includes/form.php') ?>
-        </td>
-    </tr>
-</table>
+                echo '</ul>';
+            }
+            echo '</ul>';
+            echo '</div>';
+        }
+    ?>
+</div>
+<?php include('includes/form.php') ?>
+
 <script type="text/javascript" src="static/js/javascripts/pidcrypt_util.js"></script>
 <script type="text/javascript" src="static/js/javascripts/pidcrypt.js"></script>
 <script type="text/javascript" src="static/js/javascripts/md5.js"></script>
@@ -73,6 +70,10 @@
         }
     });
 
+
+    $(document).on('click', '.folderitem', function(e) {
+        $(this).next().toggle();
+    });
     $(document).on('click', '#generatepassword', function(e) {
         var password = generatePassword(12);
         $('#itempassrepeat').val(password);
