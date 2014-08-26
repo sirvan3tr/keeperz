@@ -1,6 +1,6 @@
 <?php
   require './setup.php';
-  // Authenticate the user. 
+  // Authenticate the user.
   $person = null;
   if(isset($_SESSION['id'])){
     $person = ORM::for_table('user')->find_one($_SESSION['id']);
@@ -18,27 +18,21 @@
   <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+<div class="container">
+  <img style="width: 100%" src="static/img/banner.jpg" />
+</div>
 <nav class="navbar navbar-default" role="navigation">
   <div class="container">
-<img style="width: 100%" src="static/img/banner.jpg" />
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       <a class="navbar-brand" href="#">keeperz</a>
     </div>
 
-    
+
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
         <li><a href="#">Logs</a></li>
       </ul>
-      <button type="button" class="btn btn-default navbar-btn pull-right">Sign in</button>
     </div>
   </div>
 </nav>

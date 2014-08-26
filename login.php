@@ -18,27 +18,27 @@ $oauth2 = new apiOauth2Service($client);
 // The code parameter signifies that this is
 // a redirect from google, bearing a temporary code
 if (isset($_GET['code'])) {
-	
+
 	// This method will obtain the actuall access token from Google,
 	// so we can request user info
 	$client->authenticate();
-	
+
 	// Get the user data
 	$info = $oauth2->userinfo->get();
-	
+
 	// Find this person in the database
 	$person = ORM::for_table('user')->where('email', $info['email'])->find_one();
-	
+
 	if(!$person){
 		// No such person was found. Register!
-		
+
 		$person = ORM::for_table('user')->create();
-		
+
 		// Set the properties that are to be inserted in the db
 		$person->email = $info['email'];
 		$person->name = $info['name'];
-		
-		
+
+
 		if(isset($info['picture'])){
 			// If the user has set a public google account photo
 			$person->photo = $info['picture'];
@@ -47,14 +47,14 @@ if (isset($_GET['code'])) {
 			// otherwise use the default
 			$person->photo = 'assets/img/default_avatar.jpg';
 		}
-		
+
 		// insert the record to the database
 		$person->save();
 	}
-	
+
 	// Save the user id to the session
 	$_SESSION['id'] = $person->id();
-	
+
 	// Redirect to the base demo URL
 	header("Location: $redirect_url");
 	exit;
@@ -77,11 +77,11 @@ if(isset($_SESSION['id'])){
     <head>
         <meta charset="utf-8" />
         <title>Keeperz Login</title>
-        
+
         <!-- The stylesheets -->
         <link rel="stylesheet" href="assets/css/styles.css" />
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" />
-        
+
         <!--[if lt IE 9]>
           <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -123,11 +123,7 @@ if(isset($_SESSION['id'])){
 		margin: 0 auto;
 	}
 	#canvasId {
-		filter: blur(2px); 
-		-webkit-filter: blur(2px); 
-		-moz-filter: blur(2px);
-		-o-filter: blur(2px); 
-		-ms-filter: blur(2px);
+
 	}
     </style>
     <body>
@@ -203,7 +199,7 @@ if(isset($_SESSION['id'])){
 
 	</div>
 </div>
-		
-        
+
+
     </body>
 </html>

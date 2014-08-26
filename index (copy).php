@@ -3,34 +3,39 @@
     include("includes/header.php");
     include("includes/modals.php");
 ?>
-<div class="row">
-    <div class="col-md-3 folders-container">
-        <?php
-            //print_r($dbarr);
-            $db = ORM::for_table('client')->find_many();
-            foreach ($db as $dbs) {
-                    echo '<div class="dbparent" dbid="'.$dbs->id.'"><span class="glyphicon glyphicon-chevron-right"></span> '.$dbs->name.'</div>';
-                    echo '<div id="clientid-'.$dbs->id.'" class="dbcontainer" dbid="'.$dbs->name.'">';
-                    $folders = ORM::for_table('folder')->where('client_id', $dbs->id)->find_many();
-                    echo '<ul>';
-                    foreach ($folders as $folder) {
-                        echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.'</li>';
-                        $items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
-                        echo '<ul>';
-                        foreach ($items as $item) {
-                            echo '<li class="anitem" itemid="'.$item->id.'">'.$item->name.'<span class="glyphicon glyphicon-chevron-right"></span></li>';
-                        }
-                        echo '</ul>';
-                    }
-                    echo '</ul>';
-                    echo '</div>';
-            }
-
-        ?>
-    </div>
-    <div class="col-md-6"><?php include('includes/form.php') ?></div>
-    <div class="col-md-3">sdaf</div>
+<div class="dbparent-tabs">
+    <?php
+        $dbarr=array();
+        $db = ORM::for_table('client')->find_many();
+        foreach ($db as $dbs) {
+            echo '<div class="fl dbparent" dbid="'.$dbs->id.'">'.$dbs->name.'</div>';
+            array_push($dbarr, $dbs->id);
+        }
+    ?>
+    <div class="clear"></div>
 </div>
+<div class="folders-container fl">
+    <?php
+        //print_r($dbarr);
+        foreach ($dbarr as $dbarrs) {
+            echo '<div id="clientid-'.$dbarrs.'" class="dbcontainer" dbid="'.$dbarrs.'">';
+            $folders = ORM::for_table('folder')->where('client_id', $dbarrs)->find_many();
+            echo '<ul>';
+            foreach ($folders as $folder) {
+                echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.' <span class="glyphicon glyphicon-plus-sign pull-right"></span></li>';
+                $items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
+                echo '<ul>';
+                foreach ($items as $item) {
+                    echo '<li class="anitem" itemid="'.$item->id.'">'.$item->name.'<span class="glyphicon glyphicon-chevron-right"></span></li>';
+                }
+                echo '</ul>';
+            }
+            echo '</ul>';
+            echo '</div>';
+        }
+    ?>
+</div>
+<?php include('includes/form.php') ?>
 
 <script type="text/javascript" src="static/js/javascripts/pidcrypt_util.js"></script>
 <script type="text/javascript" src="static/js/javascripts/pidcrypt.js"></script>
@@ -125,15 +130,11 @@
         // Clicking on a database/client
         $(document).on('click', ".dbparent", function (e) {
             var dbid = $(this).attr('dbid');
-            $('.dbcontainer').slideUp('fast');
-            $('#clientid-'+dbid).slideDown('fast');
+            $('.dbcontainer').hide();
+            $('#clientid-'+dbid).show();
             $('.dbparent').removeClass('dbparent-selected');
             $(this).addClass('dbparent-selected');
 
-            $('.dbparent').find('span').removeClass('glyphicon-chevron-down');
-            $('.dbparent').find('span').addClass('glyphicon-chevron-right');
-            $(this).find('span').removeClass('glyphicon-chevron-right');
-            $(this).find('span').addClass('glyphicon-chevron-down')
         });
         // ^ end of click function
         $(document).on('click', ".anitem", function (e) {

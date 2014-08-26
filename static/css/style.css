@@ -1,5 +1,6 @@
 body {
     font-family: 'Abel', sans-serif;
+    background-color: #F3F3F3;
 }
 @font-face {
     font-family: FTRAMD;
@@ -19,27 +20,27 @@ body {
 }
 .dbparent {
     padding: 5px 20px 5px 10px;
-    background-color: #ccc;
     margin-bottom: 2px;
-    color: #fff;
-    width: 150px;
     cursor: pointer;
-    border-radius: 4px 4px 0 0;
-    margin-right: 1px;
-    color: #000;
+    color: #ccc;
+    font-weight: bold;
+    font-size: 19px;
+}
+.dbparent span.glyphicon {
+    font-size: 12px;
+    top: -2px;
 }
 .dbparent-selected {
-    background-color: #E61D4D;
-    color: #fff;
-    font-weight: bold;
-    //border-radius: 4px 20px 20px 4px;
-    //width: 200px;
+    color: #000;
 }
 .dbcontainer {
     display: none;
+    max-height: 500px;
+    overflow-y: auto;
 }
 .dbcontainer ul {
-    padding-left: 16px;
+    padding-left: 28px;
+    line-height: 15px;
 }
 /*
     background: url(../img/Shine/PNG/24x24/21_24x24.png) 0px 1px no-repeat;
@@ -66,12 +67,13 @@ td {
 div#itemform-con {
     padding: 20px;
     min-width: 500px;
+    background-color: #fff;
     /*
     margin: 0 20px 20px 20px;
-    -webkit-box-shadow: 5px 5px 18px 0px rgba(50, 50, 50, 0.25);
-    -moz-box-shadow:    5px 5px 18px 0px rgba(50, 50, 50, 0.25);
-    box-shadow:         5px 5px 18px 0px rgba(50, 50, 50, 0.25);
     */
+    -webkit-box-shadow: 0px 0px 12px -1px rgba(50, 50, 50, 0.1);
+    -moz-box-shadow:    0px 0px 12px -1px rgba(50, 50, 50, 0.1);
+    box-shadow:         0px 0px 12px -1px rgba(50, 50, 50, 0.1);
     //background-color: #ECECEC;
 }
 .folder-col {
@@ -79,13 +81,14 @@ div#itemform-con {
     color: #fff;
 }
 .folders-container {
-    width: 200px;
-    margin-right: 10px;
-    padding-right: 10px;
-    border-right: 1px solid #ccc;
-    height: 100%;
-    min-height: 450px;
+    box-shadow: 0px 0px 12px -1px rgba(50, 50, 50, 0.1);
+    padding: 20px;
+    background-color: #fff;
 }
 .folderitem {
     cursor: pointer;
+}
+.navbar-default {
+    border-color: #fff;
+    background-color: #fff;
 }
