@@ -3,7 +3,6 @@
     include("includes/header.php");
     include("includes/modals.php");
 ?>
-<h1>KEEPERZ</h1>
 <div class="dbparent-tabs">
     <?php
         $dbarr=array();
@@ -72,7 +71,7 @@
 
 
     $(document).on('click', '.folderitem', function(e) {
-        $(this).next().toggle();
+        $(this).next().slideToggle('fast');
     });
     $(document).on('click', '#generatepassword', function(e) {
         var password = generatePassword(12);

@@ -27,17 +27,16 @@ if (isset($_GET['code'])) {
 	$info = $oauth2->userinfo->get();
 	
 	// Find this person in the database
-	$person = ORM::for_table('user')->where('email', $info['email'])->find_one();
+	$person = ORM::for_table('users')->where('email', $info['email'])->find_one();
 	
 	if(!$person){
 		// No such person was found. Register!
 		
-		$person = ORM::for_table('user')->create();
+		$person = ORM::for_table('users')->create();
 		
 		// Set the properties that are to be inserted in the db
 		$person->email = $info['email'];
 		$person->name = $info['name'];
-		
 		
 		if(isset($info['picture'])){
 			// If the user has set a public google account photo
@@ -53,7 +52,7 @@ if (isset($_GET['code'])) {
 	}
 	
 	// Save the user id to the session
-	$_SESSION['id'] = $person->id();
+	$_SESSION['user_id'] = $person->id();
 	
 	// Redirect to the base demo URL
 	header("Location: $redirect_url");
@@ -62,21 +61,22 @@ if (isset($_GET['code'])) {
 
 // Handle logout
 if (isset($_GET['logout'])) {
-	unset($_SESSION['id']);
+	unset($_SESSION['user_id']);
 }
 
 $person = null;
-if(isset($_SESSION['id'])){
+if(isset($_SESSION['user_id'])){
 	// Fetch the person from the database
-	$person = ORM::for_table('user')->find_one($_SESSION['id']);
+	$person = ORM::for_table('users')->find_one($_SESSION['user_id']);
 }
 
 ?>
 
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Keeperz Login</title>
+        <title>Google Powered Login Form | Tutorialzine Demo</title>
         
         <!-- The stylesheets -->
         <link rel="stylesheet" href="assets/css/styles.css" />
@@ -87,9 +87,6 @@ if(isset($_SESSION['id'])){
         <![endif]-->
     </head>
     <style type="text/css">
-    body {
-    	background-color: #000;
-    }
 	.login-header {
 		position: absolute;
 		top: 0;
@@ -107,6 +104,8 @@ if(isset($_SESSION['id'])){
 	#login-body {
 		position: absolute;
 		top: 130px;
+		right: 50%;
+		left: 40%;
 		background: #FFF;
 		font-family: courier new;
 		color: #333;
@@ -116,18 +115,9 @@ if(isset($_SESSION['id'])){
 		border-radius: 10px;
 	}
 	a.googleLoginButton {
-		background: url("static/img/google_login_btn.png") no-repeat !important;
+		background: url("../img/google_login_btn.png") no-repeat !important;
 		width:313px;
 		height: 45px;
-		display: block;
-		margin: 0 auto;
-	}
-	#canvasId {
-		filter: blur(2px); 
-		-webkit-filter: blur(2px); 
-		-moz-filter: blur(2px);
-		-o-filter: blur(2px); 
-		-ms-filter: blur(2px);
 	}
     </style>
     <body>
@@ -191,6 +181,7 @@ if(isset($_SESSION['id'])){
 </script>
 <div class="login-container">
 	<div id="login-body">
+		<img src="../img/paradise_matrix.jpg"><br />
 		<a href="index.php" />Go back to home...</a>
 		<?php if($person):?>
 			<div id="avatar" style="background-image:url(<?php echo $person->photo?>?sz=58)"></div>
@@ -198,7 +189,7 @@ if(isset($_SESSION['id'])){
 	    	<p class="register_info">You registered <b><?php echo new RelativeTime($person->registered)?></b></p>
 	    	<a href="?logout" class="logoutButton">Logout</a>
 		<?php else:?>
-	    	<a href="<?php echo $client->createAuthUrl()?>" class="googleLoginButton"></a>
+	    	<a href="<?php echo $client->createAuthUrl()?>" class="googleLoginButton">Sign in with Google</a>
 	    <?php endif;?>
 
 	</div>
