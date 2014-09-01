@@ -1,5 +1,6 @@
-<div id="itemform-con" class="pull-left">
+<div id="itemform-con" class="pull-left white-bg">
   <form id="itemform" class="form-horizontal" role="form">
+    <input type="hidden" id="itemfolderid" name="folderId" val="">
     <div class="form-group">
       <label for="itemtitle" class="col-sm-3 control-label">Title</label>
       <div class="col-sm-9">
@@ -54,5 +55,6 @@
         <button id="itemformsubmit" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk"></span> Update</button>
       </div>
     </div>
+    <button id="newentrybtn" type="button" class="btn btn-warning btn-sm pull-right">New Entry</button>
   </form>
 </div>

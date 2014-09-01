@@ -67,23 +67,17 @@ td {
 div#itemform-con {
     padding: 20px;
     min-width: 500px;
-    background-color: #fff;
     /*
     margin: 0 20px 20px 20px;
     */
-    -webkit-box-shadow: 0px 0px 12px -1px rgba(50, 50, 50, 0.1);
-    -moz-box-shadow:    0px 0px 12px -1px rgba(50, 50, 50, 0.1);
-    box-shadow:         0px 0px 12px -1px rgba(50, 50, 50, 0.1);
-    //background-color: #ECECEC;
 }
 .folder-col {
     background-color: #333;
     color: #fff;
 }
 .folders-container {
-    box-shadow: 0px 0px 12px -1px rgba(50, 50, 50, 0.1);
+
     padding: 20px;
-    background-color: #fff;
 }
 .folderitem {
     cursor: pointer;
@@ -91,4 +85,13 @@ div#itemform-con {
 .navbar-default {
     border-color: #fff;
     background-color: #fff;
+}
+.white-bg {
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 6px -1px rgba(50, 50, 50, 0.1);
+    -moz-box-shadow:    0px 0px 6px -1px rgba(50, 50, 50, 0.1);
+    box-shadow:         0px 0px 6px -1px rgba(50, 50, 50, 0.1);
+    border-radius: 2px;
+    padding: 5px;
+    width: 100%;
 }

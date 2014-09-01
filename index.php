@@ -4,32 +4,38 @@
     include("includes/modals.php");
 ?>
 <div class="row">
-    <div class="col-md-3 folders-container">
-        <?php
-            //print_r($dbarr);
-            $db = ORM::for_table('client')->find_many();
-            foreach ($db as $dbs) {
-                    echo '<div class="dbparent" dbid="'.$dbs->id.'"><span class="glyphicon glyphicon-chevron-right"></span> '.$dbs->name.'</div>';
-                    echo '<div id="clientid-'.$dbs->id.'" class="dbcontainer" dbid="'.$dbs->name.'">';
-                    $folders = ORM::for_table('folder')->where('client_id', $dbs->id)->find_many();
-                    echo '<ul>';
-                    foreach ($folders as $folder) {
-                        echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.'</li>';
-                        $items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
+    <div class="col-md-3">
+        <div class="white-bg">
+            <?php
+                //print_r($dbarr);
+                $db = ORM::for_table('client')->find_many();
+                foreach ($db as $dbs) {
+                        echo '<div class="dbparent" dbid="'.$dbs->id.'"><span class="glyphicon glyphicon-chevron-right"></span> '.$dbs->name.'</div>';
+                        echo '<div id="clientid-'.$dbs->id.'" class="dbcontainer" dbid="'.$dbs->name.'">';
+                        $folders = ORM::for_table('folder')->where('client_id', $dbs->id)->find_many();
                         echo '<ul>';
-                        foreach ($items as $item) {
-                            echo '<li class="anitem" itemid="'.$item->id.'">'.$item->name.'<span class="glyphicon glyphicon-chevron-right"></span></li>';
+                        foreach ($folders as $folder) {
+                            echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.' <span class="newentryplusbtn glyphicon glyphicon-plus fr"></span></li>';
+                            $items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
+                            echo '<ul>';
+                            foreach ($items as $item) {
+                                echo '<li class="anitem" itemid="'.$item->id.'">'.$item->name.'<span class="glyphicon glyphicon-chevron-right"></span></li>';
+                            }
+                            echo '</ul>';
                         }
                         echo '</ul>';
-                    }
-                    echo '</ul>';
-                    echo '</div>';
-            }
+                        echo '</div>';
+                }
 
-        ?>
+            ?>
+        </div>
     </div>
     <div class="col-md-6"><?php include('includes/form.php') ?></div>
-    <div class="col-md-3">sdaf</div>
+    <div class="col-md-3">
+        <div class="white-bg">
+            <h3>Logs</h3>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="static/js/javascripts/pidcrypt_util.js"></script>
@@ -63,7 +69,6 @@
 
         }
     });
-
 
     $(document).on('click', '.folderitem', function(e) {
         $(this).next().slideToggle('fast');
@@ -99,6 +104,21 @@
             }
         });
 
+        $(document).on('click', '.newentryplusbtn', function(e) {
+            var folderid = $(this).parent().attr('folderid');
+            var form = $('#itemform');
+            $('#itemfolderid').val(folderid);
+            form.find('input').val('');
+            form.find('textarea').val('');
+        });
+
+        $(document).on('click', '#newentrybtn', function(e) {
+            var folderid = $(this).parent().attr('folderid');
+            var form = $('#itemform');
+
+            var data = form.serialize();
+            console.log(data);
+        });
 
         $(document).on('click', "#newdatabasebtn", function (e) {
             e.preventDefault();
@@ -144,6 +164,7 @@
                 success: function(data) {
                     var data = JSON.parse(data);
                     $('#itemform').slideUp("fast");
+                    $('#itemfolderid').val(data.folderid);
                     $('#itemtitle').val(data.name);
                     $('#itemusername').val(data.username);
                     $('#itempass').val(data.pass);
