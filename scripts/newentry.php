@@ -1,19 +1,20 @@
 <?php
   header("Access-Control-Allow-Origin: *");
   header('Cache-Control: no-cache, must-revalidate');
-  $title = $_REQUEST['title'];
-  $userid = $_REQUEST['user_id'];
   require '../setup.php';
 
-    $newdb = ORM::for_table('client')->create();
+    $newitem = ORM::for_table('item')->create();
 
-    $newdb->name = $title;
-    $newdb->weight = 0;
-    //$newdb->pub_date = date(DATE_RFC2822);
-    $newdb->user_id = $userid;
-    $newdb->icon_id = 1;
+    $newitem->name = $_REQUEST['title'];
+    $newitem->username = $_REQUEST['username'];
+    $newitem->password = $_REQUEST['password'];
+    $newitem->password_repeat = $_REQUEST['passrepeat'];
+    $newitem->url = $_REQUEST['url'];
+    $newitem->notes = $_REQUEST['description'];
+    $newitem->weight = 0;
+    $newitem->folder_id = $_REQUEST['folderId'];
+    $newitem->user_id = 1;
+    $newitem->icon_id = 1;
 
-    $newdb->save();
-
-  echo $title;
+    $newitem->save();
 ?>

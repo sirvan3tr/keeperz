@@ -157,9 +157,9 @@ if(isset($_SESSION['id'])){
             this.dy = yspeed;
             this.fontSize = fontSize;
             if (j == 0)
-                this.color = "#A32860";
+                this.color = "#606060";
             else
-                this.color = "#7E1645";
+                this.color = "#333";
             this.text = String.fromCharCode(ascii_start + Math.floor(Math.random()*65));
         }
         function Draw() {

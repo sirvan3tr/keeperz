@@ -30,6 +30,7 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#">Logs</a></li>
+          <li><button class="btn btn-danger btn-sm navbar-btn" data-toggle="modal" data-target="#decryptionkeymodal">Decryption Key</button></li>
         </ul>
       </div>
   </nav>

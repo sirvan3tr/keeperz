@@ -1,7 +1,9 @@
-<div id="itemform-con" class="pull-left white-bg">
-  <form id="itemform" class="form-horizontal" role="form">
-    <input type="hidden" id="itemfolderid" name="folderId" val="">
+<div id="itemform-con" class="pull-left">
+  <form id="itemform" class="form-horizontal" role="form" action="post" type="">
+    <input type="hidden" id="itemuserid" name="userid" <?php echo 'value="'.$person->id.'"'; ?> />
+    <input type="hidden" id="itemfolderid" name="folderId" value="">
     <div class="form-group">
+
       <label for="itemtitle" class="col-sm-3 control-label">Title</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" id="itemtitle" placeholder="Title" name="title" value="tech login details for rbx">
@@ -40,13 +42,13 @@
     <div class="form-group">
       <label for="itemurl" class="col-sm-3 control-label"><span class="glyphicon glyphicon-globe"></span> URL</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="itemurl" placeholder="URL" value="http://rbx.rockabox.com">
+        <input type="text" class="form-control" id="itemurl" placeholder="URL" value="http://rbx.rockabox.com" name="url">
       </div>
     </div>
     <div class="form-group">
-      <label for="itemdesc" class="col-sm-3 control-label" name="description"><span class="glyphicon glyphicon-comment"></span> Description</label>
+      <label for="itemdesc" class="col-sm-3 control-label" ><span class="glyphicon glyphicon-comment"></span> Description</label>
       <div class="col-sm-9">
-        <textarea id="itemdesc" class="form-control" rows="3">Rockabox is a platform. A platform. massive platforms
+        <textarea id="itemdesc" class="form-control" rows="3" name="description">Rockabox is a platform. A platform. massive platforms
         </textarea>
       </div>
     </div>
