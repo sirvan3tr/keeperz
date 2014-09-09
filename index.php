@@ -159,8 +159,12 @@
             <div class="passwordhint-item pswhint-rotlshapedeux" id="pswhint-huit"></div>
             <div class="passwordhint-item pswhint-longshape" id="pswhint-neuf"></div>
         </div>
-        <input type="text" id="entersecurepassword"/>
-        <input type="text" id="entersecurekey"/>
+          <div class="form-group">
+            <input type="password" class="form-control" id="entersecurepassword" placeholder="Enter Your Password">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="entersecurekey" placeholder="Enter Secure Key">
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
