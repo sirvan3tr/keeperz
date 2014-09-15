@@ -97,3 +97,24 @@ div#itemform-con {
     padding: 15px;
     width: 100%;
 }
+.newfolderentryplusbtn {
+    font-size: 8px;
+    color: orange;
+    font-weight: normal;
+    border: 1px solid orange;
+    border-radius: 3px;
+    padding: 1px 3px 0px 3px;
+    position: relative;
+    top: 8px;
+    display: none;
+}
+.dbparent-selected .newfolderentryplusbtn {
+    display: block;
+}
+.pass-author-top {
+    font-size: 12px;
+    border: 1px solid green;
+    border-radius: 3px;
+    color: green;
+    padding: 1px 3px 0px 3px;
+}

@@ -12,7 +12,7 @@
                     //print_r($dbarr);
                     $db = ORM::for_table('client')->find_many();
                     foreach ($db as $dbs) {
-                            echo '<div class="dbparent" dbid="'.$dbs->id.'"><span class="glyphicon glyphicon-chevron-right"></span> '.$dbs->name.'</div>';
+                            echo '<div class="dbparent" dbid="'.$dbs->id.'"><span class="glyphicon glyphicon-chevron-right"></span> '.$dbs->name.'<div class="newfolderentryplusbtn fr" title="Click to create a new folder.">NEW FOLDER</div></div>';
                             echo '<div id="clientid-'.$dbs->id.'" class="dbcontainer" dbid="'.$dbs->name.'">';
                             $folders = ORM::for_table('folder')->where('client_id', $dbs->id)->find_many();
                             echo '<ul>';
@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading">Password Details</div>
+          <div class="panel-heading">Password Details<div class="pass-author-top fr">Created by: Sirvan Almasi</div></div>
           <div class="panel-body">
         <?php include('includes/form.php') ?>
         </div></div>
@@ -185,6 +185,7 @@
 <script type="text/javascript" src="static/js/javascripts/aes_cbc.js"></script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(function() {
@@ -327,13 +328,15 @@
             } else {
                 return true;
             }
+            console.log(errors);
         }
         $(document).on('click', '#newentrybtn', function(e) {
+            e.preventDefault();
             var form = $('#itemform');
 
             var data = form.serialize();
 
-            if (newentryValidation()) {
+            //if (newentryValidation()) {
                 $.ajax({ url: 'scripts/newentry.php',
                     type: 'post',
                     data: data,
@@ -349,9 +352,9 @@
                         alert("There was an error. Image could not be added, please try again");
                     } // Success function
                 }); // Ajax Function
-            } else {
-                alert("errors");
-            }
+            //} else {
+              //  alert("errors");
+            //}
 
 
         });
