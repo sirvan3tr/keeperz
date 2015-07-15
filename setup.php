@@ -13,11 +13,22 @@ session_start();
 
 // Database configuration with the IDIORM library
 
-$host = 'localhost';
-$user = 'root';
-$pass = ''; //home
-//$pass = 'sirvanmysqlpassword'; //work
-$database = 'keeperz';
+$srvernme = $_SERVER['SERVER_NAME'];
+if ($srvernme=='localhost') {
+  $host = 'localhost';
+  $user = 'root';
+  $pass = '';
+  $database = 'keeperz';
+
+  $redirect_url = 'http://localhost/keeperz/login.php'; // The url of your web site
+} else {
+  $host = 'localhost';
+  $user = 'sirvan_keeperz';
+  $pass = 'trKeeperz324';
+  $database = 'sirvan_keeperz';
+
+  $redirect_url = 'http://keeperz.matrixmgt.co.uk/login.php'; // The url of your web site
+}
 
 ORM::configure("mysql:host=$host;dbname=$database");
 ORM::configure('username', $user);
@@ -28,7 +39,7 @@ ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAME
 
 // Google API. Obtain these settings from https://code.google.com/apis/console/
 
-$redirect_url = 'http://localhost/keeperz/login.php'; // The url of your web site
+
 $client_id = '660638127035-21hgr05m6v9orcs4diafgkrqtu7k509t.apps.googleusercontent.com';
 $client_secret = 'fC599duexFcT4P4RVia1Di_A';
 $api_key = 'AIzaSyAU4TdhxhmgxAg3OX3kHtpG6z5JAwRyrRY';

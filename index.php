@@ -7,17 +7,16 @@
     <div class="col-md-3">
         <div class="panel panel-success">
             <div class="panel-heading">Your Passwords</div>
-            <div class="panel-body">
+            <div id="itemsreload_con" class="panel-body">
                 <?php
-                    //print_r($dbarr);
                     $db = ORM::for_table('client')->find_many();
                     foreach ($db as $dbs) {
-                            echo '<div class="dbparent" dbid="'.$dbs->id.'"><span class="glyphicon glyphicon-chevron-right"></span> '.$dbs->name.'<div class="newfolderentryplusbtn fr" title="Click to create a new folder.">NEW FOLDER</div></div>';
+                            echo '<div class="dbparent" dbid="'.$dbs->id.'"><span class="glyphicon glyphicon-chevron-right"></span> '.$dbs->name.'</div>';
                             echo '<div id="clientid-'.$dbs->id.'" class="dbcontainer" dbid="'.$dbs->name.'">';
                             $folders = ORM::for_table('folder')->where('client_id', $dbs->id)->find_many();
                             echo '<ul>';
                             foreach ($folders as $folder) {
-                                echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.' <span class="newentryplusbtn glyphicon glyphicon-plus fr"></span></li>';
+                                echo '<li class="folderitem" folderid="'.$folder->id.'"><span class="folderitemspan"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;'.$folder->name.'</span> <span class="newentryplusbtn glyphicon glyphicon-plus fr"></span></li>';
                                 $items = ORM::for_table('item')->where('folder_id', $folder->id)->find_many();
                                 echo '<ul>';
                                 foreach ($items as $item) {
@@ -26,6 +25,7 @@
                                 echo '</ul>';
                             }
                             echo '</ul>';
+                            echo '<a class="fr newfolderbutton" dbid="'.$dbs->id.'">> New folder</a><div class="clear"></div>';
                             echo '</div>';
                     }
 
@@ -34,8 +34,8 @@
         </div><!-- /panel panel-success -->
     </div>
     <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">Password Details<div class="pass-author-top fr">Created by: Sirvan Almasi</div></div>
+        <div class="panel panel-default formpanel_parent">
+          <div class="panel-heading">Password Details<div class="pass-author-top fr">Created by: name surname</div></div>
           <div class="panel-body">
         <?php include('includes/form.php') ?>
         </div></div>
@@ -184,11 +184,38 @@
 <script type="text/javascript" src="static/js/javascripts/aes_core.js"></script>
 <script type="text/javascript" src="static/js/javascripts/aes_cbc.js"></script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="static/js/jquery-1.11.3.min.js"></script>
 
 <script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-    $(function() {
+$(function() {
+    // select the first client folder
+    $('#itemsreload_con div.dbparent').first().addClass('dbparent-selected');
+
+    $(document).on('click', '.newfolderbutton', function(e) {
+      var dbid = $(this).attr('dbid');
+      var userid = <?php echo $person->id; ?>;
+      var foldername = prompt("Enter new folder name:");
+      if (foldername != null) {
+        $.ajax({ url: 'scripts/newfolder.php',
+            type: 'post',
+            data: {foldername: foldername, clientid: dbid, userid: userid},
+            success: function(data) {
+                alert('New folder created.');
+                itemsreload();
+            },
+            error: function (data) {
+                alert("Sorry an error occured.");
+            } // Success function
+        }); // Ajax Function
+      }
+    });
+    function itemsreload() {
+        $.get( "includes/itemsreload.php", function( data ) {
+          $( "#itemsreload_con" ).html( data );
+          alert( "Success." );
+        });
+    }
     function encrypt(pass, key) {
         var aes = new pidCrypt.AES.CBC();
         return crypted = aes.encryptText(pass, key, {nBits: 256});
@@ -198,14 +225,21 @@
         var aes = new pidCrypt.AES.CBC();
         return plain = aes.decryptText(pass, key, {nBits: 256});
     }
+    function encryptionProcess(key) {
+      var passfield = $('#itempass');
+      var pass = passfield.val();
+      passfield.val(decrypt(pass, key));
+    }
 
-    pidCrypt.MD5("helloworld");
-
-    //var key = prompt("Please enter the secure key.");
-    var key = 'asecurekeyhere'; //delete
+    $('#decryptionkey').click(function() {
+      key = prompt("Please enter the secure key.");
+      if (key !== '') {
+        encryptionProcess(key);
+      }
+    })
     var xxpass = 'mysecurepassword'; //delete
     //pidCrypt.MD5();
-
+    //console.log(decrypt('U2FsdGVkX199Sa08BIU6iGF8Ki+6H5pciCuBjH4V/QU=', key));
     var sirvanspass = 'U2FsdGVkX19DgMssSz1O5vhYgB+XHjEM1TJHrwfFycTr8np18HnCsTLhDcGK5HCs';
 
 
@@ -242,16 +276,32 @@
     $(document).on('click', '#itemformsubmit', function(e) {
         var form = $(itemform),
             data = form.serialize();
-        console.log(data);
         if (confirm("You've made changes, do you wish to still continue?") == true) {
 
         } else {
 
         }
     });
+    $(document).on('click', '#itemformdelete', function(e) {
+        e.preventDefault();
+        var itemid = $(this).attr('itemid');
+        if (confirm("Are you sure you want to delete this item?") == true) {
+          $.ajax({ url: 'scripts/deleteitem.php',
+              type: 'post',
+              data: {itemid: itemid},
+              success: function(data) {
+                  alert('Item successfuly deleted');
+                  itemsreload();
+              },
+              error: function (data) {
+                  alert("Sorry an error occured.");
+              } // Success function
+          }); // Ajax Function
+        }
+    });
 
-    $(document).on('click', '.folderitem', function(e) {
-        $(this).next().slideToggle('fast');
+    $(document).on('click', '.folderitemspan', function() {
+        $(this).parent().next().slideToggle('fast');
     });
     $(document).on('click', '#generatepassword', function(e) {
         var password = generatePassword(12);
@@ -285,6 +335,11 @@
         });
 
         $(document).on('click', '.newentryplusbtn', function(e) {
+            e.preventDefault();
+            for(i=0;i<2;i++) {
+              $('.formpanel_parent').fadeTo('fast', 0.1).fadeTo('fast', 1.0);
+            }
+            $('#itemtitle').focus();
             var folderid = $(this).parent().attr('folderid'),
                 userid = $('#itemuserid').val(),
                 form = $('#itemform');
@@ -292,51 +347,58 @@
             form.find('textarea').val('');
             $('#itemfolderid').val(parseInt(folderid));
             $('#itemuserid').val(userid);
-
-            console.log($('#itemfolderid'));
         });
 
         function newentryValidation() {
             var errors = [];
-            if ($('#itemtitle').val('')) {
+            if ($('#itemtitle').val()=='') {
                 $('#itemtitle').addClass('has-error');
                 errors.push(1);
             }
-            if ($('#itemusername').val('')) {
+            if ($('#itemusername').val()=='') {
                 $('#itemusername').addClass('has-error');
                 errors.push(1);
             }
-            if ($('#itempass').val('')) {
+            if ($('#itempass').val()=='') {
                 $('#itempass').addClass('has-error');
                 errors.push(1);
             }
-            if ($('#itempassrepeat').val('')) {
+            if ($('#itempassrepeat').val()=='') {
                 $('#itempassrepeat').addClass('has-error');
                 errors.push(1);
             }
-            if ($('#itemurl').val('')) {
+            var pass = $('#itempass').val();
+            var passrepeat = $('#itempassrepeat').val();
+            if (pass !== passrepeat) {
+                $('#itempassrepeat').addClass('has-error');
+                alert('Passwords do not match.');
+                errors.push(1);
+            }
+            if ($('#itemurl').val()=='') {
                 $('#itemurl').addClass('has-error');
                 errors.push(1);
             }
-            if ($('#itemdesc').val('')) {
+            if ($('#itemdesc').val()=='') {
                 $('#itemdesc').addClass('has-error');
                 errors.push(1);
             }
-
             if (errors.length>0) {
                 return false
             } else {
                 return true;
             }
-            console.log(errors);
         }
         $(document).on('click', '#newentrybtn', function(e) {
-            e.preventDefault();
-            var form = $('#itemform');
+                e.preventDefault();
 
-            var data = form.serialize();
+            if (newentryValidation()) {
+                var pass = $('#itempass').val();
+                var encryptedpass = encrypt(pass, key);
+                $('#encrypted_password').val(encryptedpass);
 
-            //if (newentryValidation()) {
+                var form = $('#itemform');
+                var data = form.serialize();
+
                 $.ajax({ url: 'scripts/newentry.php',
                     type: 'post',
                     data: data,
@@ -344,17 +406,16 @@
                         xhr.overrideMimeType("text/plain; charset=x-user-defined");
                     },
                     success: function(data) {
-                        alert('Success');
-                        console.log(data);
+                        itemsreload();
                         //$("#id" + date + userid).html("Loading").load("td_refresh.php", {date: date, userid: userid, workinghrs: workinghrs });
                     },
                     error: function (data) {
                         alert("There was an error. Image could not be added, please try again");
                     } // Success function
                 }); // Ajax Function
-            //} else {
-              //  alert("errors");
-            //}
+            } else {
+              alert("errors");
+            }
 
 
         });
@@ -362,7 +423,6 @@
         $(document).on('click', "#newdatabasebtn", function (e) {
             e.preventDefault();
             var data = $("#newdbform").serialize();
-            console.log(data);
             $.ajax({ url: 'scripts/newdb.php',
                 type: 'post',
                 data: data,
@@ -370,7 +430,6 @@
                 xhr.overrideMimeType("text/plain; charset=x-user-defined");
                 },
                 success: function(data) {
-                    console.log(data);
                     //$("#id" + date + userid).html("Loading").load("td_refresh.php", {date: date, userid: userid, workinghrs: workinghrs });
                 },
                 error: function (data) {
@@ -407,9 +466,12 @@
                     $('#itemtitle').val(data.name);
                     $('#itemusername').val(data.username);
                     $('#itempass').val(data.pass);
-                    $('#itemppassrepeat').val(data.passrepeat);
+                    if (key !== '') {
+                      encryptionProcess(key);
+                    }
                     $('#itemurl').val(data.url);
                     $('#itemdesc').val(data.desc);
+                    $('#itemformdelete').attr('itemid', data.id);
                     $('#itemform').slideDown("fast");
                 },
                 error: function (data) {

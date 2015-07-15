@@ -8,7 +8,7 @@
     $newitem->name = $_REQUEST['title'];
     $newitem->username = $_REQUEST['username'];
     $newitem->password = $_REQUEST['password'];
-    $newitem->password_repeat = $_REQUEST['passrepeat'];
+    //$newitem->password_repeat = $_REQUEST['passrepeat'];
     $newitem->url = $_REQUEST['url'];
     $newitem->notes = $_REQUEST['description'];
     $newitem->weight = 0;

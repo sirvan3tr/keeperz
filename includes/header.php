@@ -4,6 +4,9 @@
   $person = null;
   if(isset($_SESSION['id'])){
     $person = ORM::for_table('user')->find_one($_SESSION['id']);
+    if($person->role !== '1') {
+      header("Location: ./login.php");
+    }
   } else {
     header("Location: ./login.php");
   }
@@ -25,12 +28,12 @@
         <a class="navbar-brand" href="#">keeperz</a>
       </div>
 
-
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#">Logs</a></li>
-          <li><button class="btn btn-danger btn-sm navbar-btn" data-toggle="modal" data-target="#decryptionkeymodal">Decryption Key</button></li>
+          <!--li><button class="btn btn-danger btn-sm navbar-btn" data-toggle="modal" data-target="#decryptionkeymodal">Decryption Key</button></li-->
+          <li><button id="decryptionkey" class="btn btn-danger btn-sm navbar-btn">Decryption Key</button></li>
         </ul>
       </div>
   </nav>

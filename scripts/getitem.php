@@ -7,8 +7,8 @@
                     "name"=>$item->name,
                     "username"=>$item->username,
                     "pass"=>$item->password,
-                    "passrepeat"=>$item->password_repeat,
                     "url"=>$item->url,
-                    "desc"=>$item->notes);
+                    "desc"=>$item->notes,
+                    "id"=>$item->id);
     echo json_encode($anitem);
 ?>
